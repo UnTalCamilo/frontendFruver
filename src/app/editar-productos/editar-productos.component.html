@@ -1,0 +1,81 @@
+<div class="m-2">
+    <div class="my-3 mx-0 p-0">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ProductModal" (click)="nuevoProducto()">
+            Agregar Producto
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered w-auto">
+            <thead>
+                <tr>
+                    <th class="col-1">Nombre</th>
+                    <th class="col-5">Descripción</th>
+                    <th class="col-1">Precio COP</th>
+                    <th class="col-1">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let producto of productos | async">
+                    <td>{{producto.nombre}}</td>
+                    <td>{{producto.descripcion}}</td>
+                    <td>{{producto.precio}}</td>
+                    <td>
+                        <div class="d-flex justify-content-around">
+                            <img (click)="editarProducto(producto.idProducto)" src="assets/icons/edit.png" class="icono"
+                                alt="Editar" data-bs-toggle="modal" data-bs-target="#ProductModal">
+                            <img src="assets/icons/delete.png" class="icono" 
+                            (click)="eliminarProducto(producto.idProducto)"
+                            alt="Eliminar">
+
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- modal -->
+<div class="modal fade" id="ProductModal" tabindex="-1" aria-labelledby="ProductModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ProductModal">Editar Producto</h3>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="onSubmit()" class="formProd" enctype="multipart/form-data" #form="ngForm">
+                    <div class="col-auto">
+                        <label for="nPrd" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nPrd" [(ngModel)]="producto.nombre" name="nombre" #nombre="ngModel" required>
+                    </div>
+                    <div class="col-auto">
+                        <label for="about" class="form-label">Descripción</label>
+                        <textarea type="text" class="form-control" id="about" [(ngModel)]="producto.descripcion"
+                            name="descripcion" #descripcion="ngModel" required>
+                        </textarea>
+                    </div>
+                    <div class="col-auto">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" class="form-control" id="precio" [(ngModel)]="producto.precio"
+                            name="precio" #precio="ngModel" value="0" required>
+
+                    </div>
+                    <div class="col-auto">
+                        <label for="img" class="form-label">Imagen</label>
+                        <input type="hidden" [(ngModel)]="producto.imagen" name="imagen" #imagen="ngModel">
+                        
+                        <input type="file" class="form-control" #fileImg
+                            (change)="onFileSelected($event)" id="fileImg" name="fileImg" accept="image/*">
+                    </div>
+                    <div class="col-auto my-3 d-flex justify-content-end gap-3">
+                        <button type="submit" class="btn btn-outline-success mb-3" [class.disabled]="form.invalid">Guardar</button>
+                        <button type="button" class="btn btn-outline-danger mb-3" data-bs-dismiss="modal"
+                            aria-label="Close">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

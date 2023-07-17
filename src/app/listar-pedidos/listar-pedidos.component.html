@@ -1,0 +1,101 @@
+<div class="m-4">
+    <h5>
+        Listado de pedidos
+    </h5>
+    <div class="table-responsive">
+        <table class="table table-bordered w-auto">
+            <thead>
+                <tr>
+                    <th class="col-1">Nombre</th>
+                    <th class="col-1">Precio COP</th>
+                    <th class="col-1">Cantidad</th>
+                    <th class="col-1">Total</th>
+                    <th class="col-1">Estado</th>
+                    <th class="col-1">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pedido of pedidos; let i = index">
+                    <td>{{pedido.pedidosproducto.producto.nombre}}</td>
+                    <td>{{pedido.pedidosproducto.producto.precio}}</td>
+                    <td>
+                        {{pedido.pedidosproducto.cantidad}}
+                    </td>
+                    <td>
+                        <span *ngIf="pedido.estado == '0'" class="badge bg-warning text-white">Pendiente</span>
+                        <span *ngIf="pedido.estado == '1'" class="badge bg-success text-white">Aprobado</span>
+                        <span *ngIf="pedido.estado == '2'" class="badge bg-danger text-white">Rechazado</span>
+                    </td>
+                    <td>
+                        {{pedido.pedidosproducto.cantidad * pedido.pedidosproducto.producto.precio}} COP
+                    </td>
+
+                    <td>
+                        <div class="d-flex justify-content-around" *ngIf="!auth() && pedido.estado == '0'; else admin">
+                            <img class="icono" src="assets/icons/edit.png" alt="Editar" data-bs-toggle="modal"
+                                data-bs-target="#PedidoModal" (click)="editarPedido(pedido)">
+                            <img class="icono" src="assets/icons/delete.png" alt="Eliminar"
+                            (click)="eliminarPedido(pedido)">
+                        </div>
+                        <ng-template #admin>
+                            <div class="d-flex justify-content-around" *ngIf="pedido.estado == '0'">
+                                
+                                <img class="icono" src="assets/icons/check.png" alt="Aprobar"
+                                (click)="pedido.estado == '0' && aprobarPedido(pedido)">
+                                <img class="icono" src="assets/icons/close.png" alt="Rechazar"
+                                (click)="pedido.estado == '0' && rechazarPedido(pedido)">
+    
+                            </div>
+                        </ng-template>
+                        
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="PedidoModal" tabindex="-1" aria-labelledby="ProductModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="ProductModal">Editar Producto</h3>
+            </div>
+            <div class="modal-body">
+                <form class="formPedido" #formPedido="ngForm" (ngSubmit)="onSubmit(formPedido)">
+                    <div class="col-auto my-2">
+                        <input type="hidden" class="form-control" id="nPrd" [(ngModel)]="pedido.idPP" name="idPP">
+                    </div>
+                    <div class="col-auto my-2">
+                        <label for="name" class="form-label">Nombre: {{producto.nombre}}</label>
+                    </div>
+                    <div class="col-auto my-2">
+                        <label for="price" class="form-label">Precio: {{producto.precio}} COP</label>
+                    </div>
+                    <div class="col-auto my-2">
+                        <label for="price" class="form-label">Descripcion: {{producto.descripcion}}</label>
+                    </div>
+
+                    <div class="col-auto my-2 row">
+                        <div class="col-2">
+
+                            <label for="about" class="form-label">Cantidad</label>
+                        </div>
+                        <div class="col-3">
+                            <input type="number" class="form-control" id="about" [(ngModel)]="pedido.cantidad"
+                                name="cantidad" required min="1">
+                        </div>
+                    </div>
+                    <div class="col-auto my-2 d-flex justify-content-end">
+                        <button type="submit" class="mx-3 btn btn-outline-success" [disabled]="!formPedido.valid"
+                        data-bs-dismiss="modal"
+                        >Guardar</button>
+                        <button type="button" class="mx-3 btn btn-outline-warning" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

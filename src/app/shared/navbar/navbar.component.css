@@ -1,0 +1,44 @@
+*{
+    font-size: 15px;
+    font-family: 'comic sans ms';
+}
+
+.icono{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+.error{
+    color: red;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.loginForm .button{
+    width: 30%;
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.loginForm label{
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+
+
+.searchCtn{
+    background-color: white;
+    border: 1px groove rgb(196, 194, 194);
+    border-radius: 3px;
+}
+
+.inputsrc{
+    opacity: 1 ;
+    border: 0;
+}

@@ -1,0 +1,21 @@
+.icono{
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    object-fit: cover;
+}
+.error{
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.formProd textarea ,input{
+    font-size: 15px;
+}
+
+.formProd label{
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-size: 15px;
+}

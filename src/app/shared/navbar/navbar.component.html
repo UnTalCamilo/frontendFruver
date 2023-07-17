@@ -1,0 +1,91 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse d-flex justify-content-between">
+            <div>
+
+            </div>
+            <div class="col-6">
+                <form class="d-flex searchCtn">
+                    <div class="d-grid justify-content-center align-items-center">
+                        <a (click)="seachProduct()" role="button">
+                            <img src="assets/icons/search.png" alt="carrito" class="icono mx-3">
+                        </a>
+
+                    </div>
+                    <input class="form-control inputsrc" type="search" aria-label="Search" placeholder="Buscar"
+                        name="search" id="search">
+                </form>
+            </div>
+
+            <div>
+                <div *ngIf="user.rol != 'GUEST'; else loginButton">
+                    <div class="btn-group dropstart" role="group">
+                        <a role="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{user.nombre}}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <a class="dropdown-item" (click)="logout()">LogOut</a>
+                        </ul>
+                    </div>
+
+                </div>
+                <ng-template #loginButton>
+                    <button class="btn btn-outline-primary" role="button" data-bs-toggle="modal"
+                        data-bs-target="#loginModal">
+                        Login
+                    </button>
+
+                </ng-template>
+            </div>
+
+
+        </div>
+
+    </div>
+</nav>
+
+<!-- modal-login -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Iniciar sesion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body loginForm">
+                <form class="g-2" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="col-auto">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="email" [formControl]="loginForm.controls['email']"
+                            value="email@example.com" autocomplete="off">
+                    </div>
+                    <div class="col-auto">
+                        <label for="pwd" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Password"
+                            [formControl]="loginForm.controls['password']" autocomplete="off">
+                    </div>
+                    <div class="col-auto my-3 d-flex justify-content-center gap-3">
+                        <button type="submit" class="button btn btn-success mb-3">Login</button>
+                        <button type="button" class="button btn btn-primary mb-3">Registarse</button>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="msgError">
+                <p class="error">
+                    {{msgError}}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a href="#">
+                    Olvidaste tu contraseña?
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
